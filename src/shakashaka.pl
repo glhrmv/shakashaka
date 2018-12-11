@@ -18,11 +18,11 @@ get_puzzle_from_file(File, Puzzle) :-
 
 % read_file(+Stream, -List)
 read_file(Stream, List):-
-  read_term(Stream, H, []),
-  (   H == end_of_file
+  read_term(Stream, Line, []),
+  (   Line == end_of_file
   ->  List = []
-  ;   List = [H|T],
-      read_file(Stream, T)
+  ;   List = [Line|Lines],
+      read_file(Stream, Lines)
   ).
 
 % solve_puzzle(+Puzzle, -Solution)
