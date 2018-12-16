@@ -2,6 +2,7 @@
 
 :- use_module(library(clpfd)).
 :- use_module(library(lists)).
+:- use_module(library(system)).
 
 :- ensure_loaded('list_create.pl').
 :- ensure_loaded('utils.pl').
@@ -34,9 +35,8 @@ solve_puzzle(Puzzle, Solution) :-
   length(Puzzle, X),
   Puzzle = [P| _],
   length(P, Y), %TODO: fazer verificacao do tamanho de todas as listas
-  write(X), nl,
-  write(Y), nl,
   TotalSize is X * Y,
+  lists_concatenatedTails(Puzzle, PuzzleList),
   
   /* starting variables */
   length(TempList1, TotalSize),
@@ -60,7 +60,7 @@ solve_puzzle(Puzzle, Solution) :-
   domain(TempList5, 0, 1),
   
   /* all different */
-  make_sum_one(TempList1, TempList2, TempList3, TempList4, TempList5),
+  make_sum_one(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList),
   
   /* generating variables */
   labeling([], TempList1),
@@ -81,12 +81,13 @@ solve_puzzle(Puzzle, Solution) :-
 display_solution(Solution) :-
   true.
 
-make_sum_one([], [], [], [], []) :- !.
-make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s]) :-
+make_sum_one([], [], [], [], [], []) :- !.
+make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s], [P | Ps]) :-
+  P = 'e',
   Sum is 1,
-  Sum #= L1 + L2 + L3 + L4 + L5,
-  make_sum_one(L1s, L2s, L3s, L4s, L5s).
-  
-  
+  Sum #= L1 + L2 + L3 + L4 + L5, !,
+  make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
+make_sum_one([_ | L1s], [_ | L2s], [_ | L3s], [_ | L4s], [_ | L5s], [_ | Ps]) :-
+  make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
 	
 
