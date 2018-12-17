@@ -109,11 +109,11 @@ make_sum_one([_ | L1s], [_ | L2s], [_ | L3s], [_ | L4s], [_ | L5s], [_ | Ps]) :-
 make_sum_equals_puzzle( _,  _,  _,  _, _, 0, _,    _,    _) :- !.
 make_sum_equals_puzzle(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
   XNew is X - 1,
-  iterate_columns(L1, L2, L3, L4, P, X, Y, XMax, YMax),
+  make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, Y, XMax, YMax),
   make_sum_equals_puzzle(L1, L2, L3, L4, P, XNew, Y, XMax, YMax).
 	
-iterate_columns( _,  _,  _,  _, _, _, 0,    _,    _) :- !.
-iterate_columns(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
+make_sum_equals_puzzle_r( _,  _,  _,  _, _, _, 0,    _,    _) :- !.
+make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
   YNew is Y - 1,
   get_value(P, X, Y, R),
   R \= 'b',
@@ -148,11 +148,11 @@ iterate_columns(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
   
   R #= R1UP + R2UP + R3UP + R4UP + R1L + R2L + R3L + R4L
 	 + R1D + R2D + R3D + R4D + R1R + R2R + R3R + R4R , !,  
-  iterate_columns(L1, L2, L3, L4, P, X, YNew, XMax, YMax).
+  make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, YNew, XMax, YMax).
 
-iterate_columns(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
+make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
   YNew is Y - 1,
-  iterate_columns(L1, L2, L3, L4, P, X, YNew, XMax, YMax).
+  make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, YNew, XMax, YMax).
   
 	
 
