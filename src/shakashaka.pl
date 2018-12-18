@@ -10,6 +10,14 @@
 % shakashaka(+File)
 shakashaka(File) :-
   get_puzzle_from_file(File, Puzzle),
+  write('Validating puzzle...'), nl,
+  (
+    validate_puzzle(Puzzle) ->
+    write('The puzzle is valid. Solving...'), nl
+  ;
+    write('The puzzle is not valid. Exiting...'), nl,
+    false
+  ),
   write(Puzzle), nl,
   solve_puzzle(Puzzle, Solution),
   display_solution(Solution).
@@ -29,6 +37,39 @@ read_file(Stream, List):-
   ;   List = [Line|Lines],
     read_file(Stream, Lines)
   ).
+
+% validate_puzzle(+Puzzle)
+validate_puzzle(Puzzle) :-
+  validate_dimensions(Puzzle),
+  validate_lines(Puzzle).
+
+% validate_dimensions(+Puzzle)
+validate_dimensions(Puzzle) :-
+  length(Puzzle, Length),
+  Length > 1,
+  equal_lengths(Puzzle).
+
+% equal_lengths(+ListOfLists)
+equal_lengths([]).
+equal_lengths([[]]).
+equal_lengths([[_|_]]).
+equal_lengths([X,Y|Rest]) :-
+  length(X, Len),
+  length(Y, Len),
+  equal_lengths([Y|Rest]).
+
+% validate_lines(+Puzzle)
+validate_lines([]).
+validate_lines([Line | Lines]) :-
+  validate_line(Line),
+  validate_lines(Lines).
+
+% validate_line(+Puzzle)
+validate_line([]).
+validate_line([Char | Chars]) :-
+  % Input puzzle can only have these characters
+  member(Char, [e, b, 0, 1, 2, 3, 4]),
+  validate_line(Chars).
 
 % display_solution(+Solution)
 display_solution([]).
