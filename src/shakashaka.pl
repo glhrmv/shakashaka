@@ -82,7 +82,7 @@ validate_line([Char | Chars]) :-
 % display_solution(+Solution)
 display_solution([]).
 display_solution([Line | Lines]) :-
-  write('| '),
+  put_code(9500),
   display_line(Line),
   nl,
   display_solution(Lines).
@@ -91,15 +91,15 @@ display_solution([Line | Lines]) :-
 display_line([]).
 display_line([Char | Chars]) :-
   write_char(Char),
-  write(' | '),
+  put_code(9500),
   display_line(Chars).
 
 /*
-[
-Y Y
-X[1,2]
-X[2,3]
-]
+	[
+		  Y Y
+		X[1,2]
+		X[2,3]
+	]
 */
 
 % solve_puzzle(+Puzzle, -Solution)
@@ -136,7 +136,7 @@ solve_puzzle(Puzzle, Solution) :-
   make_sum_one(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList),
 
   /* If there is numbers, make the adjacent sum equals that */
-  make_sum_equals_puzzle(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Puzzle, X, Y, X, Y),
+  make_sum_equals_puzzle(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, Puzzle, X, Y, X, Y),
 
   /* generating variables */
   labeling([], TempList1),
@@ -150,6 +150,9 @@ solve_puzzle(Puzzle, Solution) :-
   write(TriangleSL), nl,
   write(TriangleSR), nl,
   write(Whites), nl,
+  
+  convert_to_one_board(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList, SolutionNotFlat),
+  split_list(SolutionNotFlat, Y, Solution),
 
   true.
 
@@ -169,14 +172,14 @@ make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s], [P | Ps
 make_sum_one([_ | L1s], [_ | L2s], [_ | L3s], [_ | L4s], [_ | L5s], [_ | Ps]) :-
   make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
 
-make_sum_equals_puzzle( _,  _,  _,  _, _, 0, _,    _,    _) :- !.
-make_sum_equals_puzzle(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
+make_sum_equals_puzzle( _,  _,  _,  _,  _, _, 0, _,    _,    _) :- !.
+make_sum_equals_puzzle(L1, L2, L3, L4, L5, P, X, Y, XMax, YMax) :-
   XNew is X - 1,
-  make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, Y, XMax, YMax),
-  make_sum_equals_puzzle(L1, L2, L3, L4, P, XNew, Y, XMax, YMax).
+  make_sum_equals_puzzle_r(L1, L2, L3, L4, L5, P,    X, Y, XMax, YMax),
+  make_sum_equals_puzzle(  L1, L2, L3, L4, L5, P, XNew, Y, XMax, YMax).
 
-make_sum_equals_puzzle_r( _,  _,  _,  _, _, _, 0,    _,    _) :- !.
-make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
+make_sum_equals_puzzle_r(         _,          _,          _,          _,      _, _, _, 0,    _,    _) :- !.
+make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax) :-
   YNew is Y - 1,
   get_value(P, X, Y, R),
   R \= 'b',
@@ -184,37 +187,45 @@ make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
 
   %up position
   XUP is X - 1,
-  get_value(L1, XUP, Y, R1UP),
-  get_value(L2, XUP, Y, R2UP),
-  get_value(L3, XUP, Y, R3UP),
-  get_value(L4, XUP, Y, R4UP),
-
+  get_value(TriangleNL, XUP, Y, R1UP),
+  get_value(TriangleNR, XUP, Y, R2UP),
+  get_value(TriangleSL, XUP, Y, R3UP),
+  get_value(TriangleSR, XUP, Y, R4UP),
+  get_value(Whites    , XUP, Y, R5UP),
+  
+  %this up position only can have blank or llt or lrt
+  (   XUP > 0	->
+     sum([R1UP, R2UP, R5UP], #=, 1)
+	 ; true %out of bounderies
+  ),
+  
+  
   %left
   YL is Y - 1,
-  get_value(L1, X, YL, R1L),
-  get_value(L2, X, YL, R2L),
-  get_value(L3, X, YL, R3L),
-  get_value(L4, X, YL, R4L),
+  get_value(TriangleNL, X, YL, R1L),
+  get_value(TriangleNR, X, YL, R2L),
+  get_value(TriangleSL, X, YL, R3L),
+  get_value(TriangleSR, X, YL, R4L),
 
   %down
   XD is X + 1,
-  get_value(L1, XD, Y, R1D),
-  get_value(L2, XD, Y, R2D),
-  get_value(L3, XD, Y, R3D),
-  get_value(L4, XD, Y, R4D),
+  get_value(TriangleNL, XD, Y, R1D),
+  get_value(TriangleNR, XD, Y, R2D),
+  get_value(TriangleSL, XD, Y, R3D),
+  get_value(TriangleSR, XD, Y, R4D),
 
   %right
   YR is Y + 1,
-  get_value(L1, X, YR, R1R),
-  get_value(L2, X, YR, R2R),
-  get_value(L3, X, YR, R3R),
-  get_value(L4, X, YR, R4R),
+  get_value(TriangleNL, X, YR, R1R),
+  get_value(TriangleNR, X, YR, R2R),
+  get_value(TriangleSL, X, YR, R3R),
+  get_value(TriangleSR, X, YR, R4R),
 
   R #= R1UP + R2UP + R3UP + R4UP + R1L + R2L + R3L + R4L
   + R1D + R2D + R3D + R4D + R1R + R2R + R3R + R4R , !,
-  make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, YNew, XMax, YMax).
+  make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
 
-make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
+make_sum_equals_puzzle_r(  L1, L2, L3, L4, L5, P, X,    Y, XMax, YMax) :-
   YNew is Y - 1,
-  make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, YNew, XMax, YMax).
+  make_sum_equals_puzzle_r(L1, L2, L3, L4, L5, P, X, YNew, XMax, YMax).
 
