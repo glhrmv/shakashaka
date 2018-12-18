@@ -31,6 +31,9 @@ get_puzzle_from_file(File, Puzzle) :-
 
 % read_file(+Stream, -List)
 read_file(Stream, List):-
+  % Read stream until EOF,
+  % adding each line
+  % as a list onto List
   read_term(Stream, Line, []),
   (   Line == end_of_file
   ->  List = []
@@ -40,13 +43,18 @@ read_file(Stream, List):-
 
 % validate_puzzle(+Puzzle)
 validate_puzzle(Puzzle) :-
+  % If puzzle is of valid dimensions m x n
   validate_dimensions(Puzzle),
+  % If puzzle has only accepted characters
   validate_lines(Puzzle).
 
 % validate_dimensions(+Puzzle)
 validate_dimensions(Puzzle) :-
   length(Puzzle, Length),
+  % Puzzle needs at least 2 rows
   Length > 1,
+  % Check if all of the sublists (puzzle rows)
+  % have the same length (number of columns)
   equal_lengths(Puzzle).
 
 % equal_lengths(+ListOfLists)
