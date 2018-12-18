@@ -195,7 +195,7 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
   
   %this up position only can have blank or llt or lrt
   (   XUP > 0	->
-     sum([R13P, R4UP, R5UP], #=, 1)
+     sum([R3UP, R4UP, R5UP], #=, 1)
 	 ; true %out of bounderies
   ),
   
