@@ -30,6 +30,21 @@ read_file(Stream, List):-
     read_file(Stream, Lines)
   ).
 
+% display_solution(+Solution)
+display_solution([]).
+display_solution([Line | Lines]) :-
+  write('| '),
+  display_line(Line),
+  nl,
+  display_solution(Lines).
+
+% display_line(+Line)
+display_line([]).
+display_line([Char | Chars]) :-
+  write_char(Char),
+  write(' | '),
+  display_line(Chars).
+
 /*
 [
 Y Y
@@ -89,10 +104,6 @@ solve_puzzle(Puzzle, Solution) :-
 
   true.
 
-% display_solution(+Solution)
-display_solution(Solution) :-
-  true.
-
 make_sum_one([], [], [], [], [], []) :- !.
 make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s], [P | Ps]) :-
   P = 'e',
@@ -121,6 +132,7 @@ make_sum_equals_puzzle_r(L1, L2, L3, L4, P, X, Y, XMax, YMax) :-
   get_value(P, X, Y, R),
   R \= 'b',
   R \= 'e',
+
   %up position
   XUP is X - 1,
   get_value(L1, XUP, Y, R1UP),

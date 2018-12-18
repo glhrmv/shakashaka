@@ -17,3 +17,4 @@ set_values_at_zero([]) :- !.
 set_values_at_zero([X | Xs]) :-
   X is 0,
   set_values_at_zero(Xs).
+
