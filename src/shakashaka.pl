@@ -265,84 +265,102 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
     get_value(TriangleSR, X, Y, R4),
 
     (X == 1 ->    sum([R3, R4], #=, 0);true),
-      (Y == 1 ->    sum([R2, R4], #=, 0);true),
-        (Y == YMax -> sum([R1, R3], #=, 0);true),
-          (X == XMax -> sum([R1, R2], #=, 0);true),
+    (Y == 1 ->    sum([R2, R4], #=, 0);true),
+    (Y == YMax -> sum([R1, R3], #=, 0);true),
+    (X == XMax -> sum([R1, R2], #=, 0);true),
 
-            %right
-            YR is Y + 1,
-            %down
-            XD is X + 1,
-            %left
-            YL is Y - 1,
-            %up position
-            XUP is X - 1,
+	%right
+	YR is Y + 1,
+	%down
+	XD is X + 1,
+	%left
+	YL is Y - 1,
+	%up position
+	XUP is X - 1,
+	
+	%making sure white spaces forms squares
+		get_value(Whites	, X , Y , W1),
+		get_value(Whites	, XD, Y , W2),
+		get_value(Whites    , X , YR, W3),
+		get_value(Whites    , XD, YR, W4),		
+		%SR position
+		get_value(TriangleSR, XD, YR, SR),
+		W1 + W2 + W3 #=< W4 + SR + 2,
+		%SL Position
+		get_value(TriangleSL, XD, Y , SL),
+		W1 + W3 + W4 #=< W2 + SL + 2,
+		%NR Position
+		get_value(TriangleNR, X , YR, NR),
+		W1 + W2 + W4 #=< W3 + NR + 2,
+		%NL Position
+		get_value(TriangleNR, X , Y , NL),
+		W2 + W3 + W4 #=< W1 + NL + 2,
+		
+		
+	%NL triangles (R1)
+		%down direction
+		get_value(TriangleNL, XD, YL, NLD1),
+		get_value(TriangleSL, XD, Y, NLD2),
+		R1 #=< NLD1 + NLD2,
+		%up direction
+		get_value(TriangleNL, XUP, YR, NLU1),
+		get_value(TriangleNR, X, YR, NLU2),
+		R1 #=< NLU1 + NLU2,
+		%down direction
+		get_value(Whites, XD, Y, NLDW),
+		R1 + NLD1 #=< NLDW + 1,
+		%updirection
+		get_value(Whites, X, YR, NLUW),
+		R1 + NLU1 #=< NLUW + 1,
+		
+	%NR triangles (R2)
+		%down direction
+		get_value(TriangleNR, XD, YR, NRD1),
+		get_value(TriangleSR, XD, Y, NRD2),
+		R2 #=< NRD1 + NRD2,
+		%up direction
+		get_value(TriangleNR, XUP, YL, NRU1),
+		get_value(TriangleNL, X, YL, NRU2),
+		R2 #=< NRU1 + NRU2,
+		%down direction
+		get_value(Whites, XD, Y, NRDW),
+		R2 + NRD1 #=< NRDW + 1,
+		%updirection
+		get_value(Whites, X, YL, NRUW),
+		R2 + NRU1 #=< NRUW + 1,
 
+	%SL triangles (R3)
+		%down direction
+		get_value(TriangleSL, XD, YR, SLD1),
+		get_value(TriangleSR, X, YR, SLD2),
+		R3 #=< SLD1 + SLD2,
+		%up direction
+		get_value(TriangleSL, XUP, YL, SLU1),
+		get_value(TriangleNL, XUP, Y, SLU2),
+		R3 #=< SLU1 + SLU2,			
+		%making white spaces to form bigger triangles
+		%down direction
+		get_value(Whites, X, YR, SLDW),
+		R3 + SLD1 #=< SLDW + 1,
+		%updirection
+		get_value(Whites, XUP, Y, SLUW),
+		R3 + SLU1 #=< SLUW + 1,
+		
+	%SR triangles (R4)
+		%down direction
+		get_value(TriangleSR, XD, YL, SRD1),
+		get_value(TriangleSL, X, YL, SRD2),
+		R4 #=< SRD1 + SRD2,
+		%up direction
+		get_value(TriangleSR, XUP, YR, SRU1),
+		get_value(TriangleNR, XUP, Y, SRU2),
+		R4 #=< SRU1 + SRU2,
+		%down direction
+		get_value(Whites, X, YL, SRDW),
+		R3 + SRD1 #=< SRDW + 1,
+		%updirection
+		get_value(Whites, XUP, Y, SRUW),
+		R3 + SRU1 #=< SRUW + 1,
 
-        %NL triangles (R1)
-            %down direction
-            get_value(TriangleNL, XD, YL, NLD1),
-            get_value(TriangleSL, XD, Y, NLD2),
-            R1 #=< NLD1 + NLD2,
-            %up direction
-            get_value(TriangleNL, XUP, YR, NLU1),
-            get_value(TriangleNR, X, YR, NLU2),
-            R1 #=< NLU1 + NLU2,
-			%down direction
-			get_value(Whites, XD, Y, NLDW),
-			R1 + NLD1 #=< NLDW + 1,
-			%updirection
-			get_value(Whites, X, YR, NLUW),
-			R1 + NLU1 #=< NLUW + 1,
-			
-		%NR triangles (R2)
-            %down direction
-            get_value(TriangleNR, XD, YR, NRD1),
-            get_value(TriangleSR, XD, Y, NRD2),
-            R2 #=< NRD1 + NRD2,
-            %up direction
-            get_value(TriangleNR, XUP, YL, NRU1),
-            get_value(TriangleNL, X, YL, NRU2),
-            R2 #=< NRU1 + NRU2,
-			%down direction
-			get_value(Whites, XD, Y, NRDW),
-			R2 + NRD1 #=< NRDW + 1,
-			%updirection
-			get_value(Whites, X, YL, NRUW),
-			R2 + NRU1 #=< NRUW + 1,
-
-        %SL triangles (R3)
-            %down direction
-            get_value(TriangleSL, XD, YR, SLD1),
-            get_value(TriangleSR, X, YR, SLD2),
-            R3 #=< SLD1 + SLD2,
-            %up direction
-            get_value(TriangleSL, XUP, YL, SLU1),
-            get_value(TriangleNL, XUP, Y, SLU2),
-            R3 #=< SLU1 + SLU2,			
-			%making white spaces to form bigger triangles
-			%down direction
-			get_value(Whites, X, YR, SLDW),
-			R3 + SLD1 #=< SLDW + 1,
-			%updirection
-			get_value(Whites, XUP, Y, SLUW),
-			R3 + SLU1 #=< SLUW + 1,
-			
-		%SR triangles (R4)
-            %down direction
-            get_value(TriangleSR, XD, YL, SRD1),
-            get_value(TriangleSL, X, YL, SRD2),
-            R4 #=< SRD1 + SRD2,
-            %up direction
-            get_value(TriangleSR, XUP, YR, SRU1),
-            get_value(TriangleNR, XUP, Y, SRU2),
-            R4 #=< SRU1 + SRU2,
-			%down direction
-			get_value(Whites, X, YL, SRDW),
-			R3 + SRD1 #=< SRDW + 1,
-			%updirection
-			get_value(Whites, XUP, Y, SRUW),
-			R3 + SRU1 #=< SRUW + 1,
-
-            make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
+		make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
 
