@@ -278,6 +278,13 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
 	%up position
 	XUP is X - 1,
 	
+	%prevent nested rectangles
+		get_value(TriangleSR, X , Y , Nested1),
+		get_value(TriangleSL, X , YR, Nested2),
+		get_value(TriangleNR, XD, Y , Nested3),
+		get_value(TriangleNL, XD, YR, Nested4),
+		sum([Nested1, Nested2, Nested3, Nested4], #<, 4),
+		
 	%making sure white spaces forms squares
 		get_value(Whites	, X , Y , W1),
 		get_value(Whites	, XD, Y , W2),
