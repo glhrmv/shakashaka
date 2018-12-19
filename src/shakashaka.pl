@@ -20,7 +20,7 @@ shakashaka(File) :-
   ),
   write(Puzzle), nl,
   solve_puzzle(Puzzle, Solution),
-  display_solution(Solution).
+  print_solution(Solution).
 
 % get_puzzle_from_file(+File, -Puzzle)
 get_puzzle_from_file(File, Puzzle) :-
@@ -50,9 +50,9 @@ validate_puzzle(Puzzle) :-
 
 % validate_dimensions(+Puzzle)
 validate_dimensions(Puzzle) :-
-  length(Puzzle, Length),
   % Puzzle needs at least 2 rows
-  Length > 1,
+  length(Puzzle, RowCount),
+  RowCount > 1,
   % Check if all of the sublists (puzzle rows)
   % have the same length (number of columns)
   equal_lengths(Puzzle).
@@ -60,11 +60,11 @@ validate_dimensions(Puzzle) :-
 % equal_lengths(+ListOfLists)
 equal_lengths([]).
 equal_lengths([[]]).
-equal_lengths([[_|_]]).
-equal_lengths([X,Y|Rest]) :-
+equal_lengths([[_ | _]]).
+equal_lengths([X, Y | Rest]) :-
   length(X, Len),
   length(Y, Len),
-  equal_lengths([Y|Rest]).
+  equal_lengths([Y | Rest]).
 
 % validate_lines(+Puzzle)
 validate_lines([]).
@@ -72,27 +72,27 @@ validate_lines([Line | Lines]) :-
   validate_line(Line),
   validate_lines(Lines).
 
-% validate_line(+Puzzle)
+% validate_line(+Line)
 validate_line([]).
 validate_line([Char | Chars]) :-
   % Input puzzle can only have these characters
   member(Char, [e, b, 0, 1, 2, 3, 4]),
   validate_line(Chars).
 
-% display_solution(+Solution)
-display_solution([]).
-display_solution([Line | Lines]) :-
+% print_solution(+Solution)
+print_solution([]).
+print_solution([Line | Lines]) :-
   put_code(9500),
-  display_line(Line),
+  print_line(Line),
   nl,
-  display_solution(Lines).
+  print_solution(Lines).
 
-% display_line(+Line)
-display_line([]).
-display_line([Char | Chars]) :-
+% print_line(+Line)
+print_line([]).
+print_line([Char | Chars]) :-
   print_char(Char),
   put_code(9500),
-  display_line(Chars).
+  print_line(Chars).
 
 /*
 [
@@ -241,7 +241,6 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
       sum([R2R, R4R], #=, 0)
     ; true %out of bounderies
     ),
-
 
     (
       R \= 'b' ->
