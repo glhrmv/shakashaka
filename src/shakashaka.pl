@@ -285,9 +285,19 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             get_value(TriangleSL, XD, Y, NLD2),
             R1 #=< NLD1 + NLD2,
             %up direction
-            get_value(TriangleSL, XUP, YR, NLU1),
+            get_value(TriangleNL, XUP, YR, NLU1),
             get_value(TriangleNR, X, YR, NLU2),
             R1 #=< NLU1 + NLU2,
+			
+			%NR triangles (R2)
+            %down direction
+            get_value(TriangleNR, XD, YR, NRD1),
+            get_value(TriangleSR, XD, Y, NRD2),
+            R2 #=< NRD1 + NRD2,
+            %up direction
+            get_value(TriangleNR, XUP, YL, NRU1),
+            get_value(TriangleNL, X, YL, NRU2),
+            R2 #=< NRU1 + NRU2,
 
             %SL triangles (R3)
             %down direction
@@ -298,6 +308,16 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             get_value(TriangleSL, XUP, YL, SLU1),
             get_value(TriangleNL, XUP, Y, SLU2),
             R3 #=< SLU1 + SLU2,
+			
+			%SR triangles (R4)
+            %down direction
+            get_value(TriangleSR, XD, YL, SRD1),
+            get_value(TriangleSL, X, YL, SRD2),
+            R4 #=< SRD1 + SRD2,
+            %up direction
+            get_value(TriangleSR, XUP, YR, SRU1),
+            get_value(TriangleNR, XUP, Y, SRU2),
+            R4 #=< SRU1 + SRU2,
 
             make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
 
