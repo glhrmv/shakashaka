@@ -182,7 +182,7 @@ make_sum_equals_puzzle_r(         _,          _,          _,          _,      _,
 make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax) :-
   YNew is Y - 1,
   get_value(P, X, Y, R),
-  R \= 'b',
+  
   R \= 'e',
 
   %up position
@@ -197,6 +197,7 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
   (   XUP > 0	->
      sum([R3UP, R4UP, R5UP], #=, 1)
 	 ; true %out of bounderies
+			% if needed we can put that when they are at the borders XUP = 1 that something is not permitted
   ),
   
   
@@ -206,6 +207,11 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
   get_value(TriangleNR, X, YL, R2L),
   get_value(TriangleSL, X, YL, R3L),
   get_value(TriangleSR, X, YL, R4L),
+  get_value(Whites    , X, YL, R5L),
+  (   YL > 0	->
+     sum([R2L, R4L, R5L], #=, 1)
+	 ; true %out of bounderies
+  ),
 
   %down
   XD is X + 1,
@@ -213,6 +219,11 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
   get_value(TriangleNR, XD, Y, R2D),
   get_value(TriangleSL, XD, Y, R3D),
   get_value(TriangleSR, XD, Y, R4D),
+  get_value(Whites    , XD, Y, R5D),
+  (   XD < XMax	->
+     sum([R1D, R2D, R5D], #=, 1)
+	 ; true %out of bounderies
+  ),
 
   %right
   YR is Y + 1,
@@ -220,10 +231,52 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
   get_value(TriangleNR, X, YR, R2R),
   get_value(TriangleSL, X, YR, R3R),
   get_value(TriangleSR, X, YR, R4R),
+  get_value(Whites    , X, YR, R5R),
+  (   YR < YMax	->
+     sum([R1R, R3R, R5R], #=, 1)
+    ; true %out of bounderies
+  ),
 
-  R #= R1UP + R2UP + R3UP + R4UP + R1L + R2L + R3L + R4L
-  + R1D + R2D + R3D + R4D + R1R + R2R + R3R + R4R , !,
+  
+  (
+	R \= 'b' ->  
+	R #= R3UP + R4UP + R2L + R4L + R1D + R2D + R1R + R3R,  
+	sum([R1UP, R2UP, R3D, R4D, R1L, R3L, R2R, R4R], #=, 0)  
+  ;
+	true  
+  ),
+  
   make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
+
+% quando as casas estao vazias, comecando a trabalhar na restricao que o triangulo pode ter um seguinte igual em i+1 j+1 ou fechado ao lado
+make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax) :-  
+  YNew is Y - 1,
+  get_value(P, X, Y, R),
+  R == 'e', %confirmacao que e so em espacos brancos
+  
+  %right
+  YR is Y + 1,
+  %down
+  XD is X + 1,
+  %left
+  YL is Y - 1,
+  %up position
+  XUP is X - 1, 
+  
+  %if they are in borders they can't make 45º degree  
+  get_value(TriangleNL, X, Y, R1),
+  get_value(TriangleNR, X, Y, R2),
+  get_value(TriangleSL, X, Y, R3),
+  get_value(TriangleSR, X, Y, R4),
+  get_value(Whites    , X, Y, R5),
+	
+  (X == 1 ->    sum([R3, R4], #=, 0);true),
+  (Y == 1 ->    sum([R2, R4], #=, 0);true),
+  (Y == YMax -> sum([R1, R3], #=, 0);true),
+  (X == XMax -> sum([R1, R2], #=, 0);true), 
+  
+  make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
+	
 
 make_sum_equals_puzzle_r(  L1, L2, L3, L4, L5, P, X,    Y, XMax, YMax) :-
   YNew is Y - 1,
