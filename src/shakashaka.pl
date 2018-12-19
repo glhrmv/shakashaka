@@ -18,9 +18,11 @@ shakashaka(File) :-
     write('The puzzle is not valid. Exiting...'), nl,
     false
   ),
-  write(Puzzle), nl,
   solve_puzzle(Puzzle, Solution),
-  print_solution(Solution).
+  write('Puzzle given:'), nl,
+  print_puzzle(Puzzle),
+  write('Solution:'), nl,
+  print_puzzle(Solution).
 
 % get_puzzle_from_file(+File, -Puzzle)
 get_puzzle_from_file(File, Puzzle) :-
@@ -79,13 +81,13 @@ validate_line([Char | Chars]) :-
   member(Char, [e, b, 0, 1, 2, 3, 4]),
   validate_line(Chars).
 
-% print_solution(+Solution)
-print_solution([]).
-print_solution([Line | Lines]) :-
+% print_puzzle(+Puzzle)
+print_puzzle([]).
+print_puzzle([Line | Lines]) :-
   put_code(9474),
   print_line(Line),
   nl,
-  print_solution(Lines).
+  print_puzzle(Lines).
 
 % print_line(+Line)
 print_line([]).
@@ -146,12 +148,6 @@ solve_puzzle(Puzzle, Solution) :-
   labeling([], TempList3),
   labeling([], TempList4),
   labeling([], TempList5),
-
-  write(TriangleNL), nl,
-  write(TriangleNR), nl,
-  write(TriangleSL), nl,
-  write(TriangleSR), nl,
-  write(Whites), nl,
 
   convert_to_one_board(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList, SolutionNotFlat),
   split_list(SolutionNotFlat, Y, Solution),
@@ -265,147 +261,147 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
     get_value(TriangleSR, X, Y, R4),
 
     (X == 1 ->    sum([R3, R4], #=, 0);true),
-    (Y == 1 ->    sum([R2, R4], #=, 0);true),
-    (Y == YMax -> sum([R1, R3], #=, 0);true),
-    (X == XMax -> sum([R1, R2], #=, 0);true),
+      (Y == 1 ->    sum([R2, R4], #=, 0);true),
+        (Y == YMax -> sum([R1, R3], #=, 0);true),
+          (X == XMax -> sum([R1, R2], #=, 0);true),
 
-	%right
-	YR is Y + 1,
-	%down
-	XD is X + 1,
-	%left
-	YL is Y - 1,
-	%up position
-	XUP is X - 1,
-	
-	%prevent nested rectangles
-		get_value(TriangleSR, X , Y , Nested1),
-		get_value(TriangleSL, X , YR, Nested2),
-		get_value(TriangleNR, XD, Y , Nested3),
-		get_value(TriangleNL, XD, YR, Nested4),
-		sum([Nested1, Nested2, Nested3, Nested4], #<, 4),
-	
-	%stop repeated triangles
-		DiffX is XMax - X,
-		DiffY is YMax - Y,
-		stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, DiffX, DiffY),
-		
-	%making sure white spaces forms squares
-		get_value(Whites	, X , Y , W1),
-		get_value(Whites	, XD, Y , W2),
-		get_value(Whites    , X , YR, W3),
-		get_value(Whites    , XD, YR, W4),		
-		%SR position
-		get_value(TriangleSR, XD, YR, SR),
-		W1 + W2 + W3 #=< W4 + SR + 2,
-		%SL Position
-		get_value(TriangleSL, XD, Y , SL),
-		W1 + W3 + W4 #=< W2 + SL + 2,
-		%NR Position
-		get_value(TriangleNR, X , YR, NR),
-		W1 + W2 + W4 #=< W3 + NR + 2,
-		%NL Position
-		get_value(TriangleNL, X , Y , NL),
-		W2 + W3 + W4 #=< W1 + NL + 2,
-		
-		
-	%NL triangles (R1)
-		%down direction
-		get_value(TriangleNL, XD, YL, NLD1),
-		get_value(TriangleSL, XD, Y, NLD2),
-		R1 #=< NLD1 + NLD2,
-		%up direction
-		get_value(TriangleNL, XUP, YR, NLU1),
-		get_value(TriangleNR, X, YR, NLU2),
-		R1 #=< NLU1 + NLU2,
-		%down direction
-		get_value(Whites, XD, Y, NLDW),
-		R1 + NLD1 #=< NLDW + 1,
-		%updirection
-		get_value(Whites, X, YR, NLUW),
-		R1 + NLU1 #=< NLUW + 1,
-		
-	%NR triangles (R2)
-		%down direction
-		get_value(TriangleNR, XD, YR, NRD1),
-		get_value(TriangleSR, XD, Y, NRD2),
-		R2 #=< NRD1 + NRD2,
-		%up direction
-		get_value(TriangleNR, XUP, YL, NRU1),
-		get_value(TriangleNL, X, YL, NRU2),
-		R2 #=< NRU1 + NRU2,
-		%down direction
-		get_value(Whites, XD, Y, NRDW),
-		R2 + NRD1 #=< NRDW + 1,
-		%updirection
-		get_value(Whites, X, YL, NRUW),
-		R2 + NRU1 #=< NRUW + 1,
+            %right
+            YR is Y + 1,
+            %down
+            XD is X + 1,
+            %left
+            YL is Y - 1,
+            %up position
+            XUP is X - 1,
 
-	%SL triangles (R3)
-		%down direction
-		get_value(TriangleSL, XD, YR, SLD1),
-		get_value(TriangleSR, X, YR, SLD2),
-		R3 #=< SLD1 + SLD2,
-		%up direction
-		get_value(TriangleSL, XUP, YL, SLU1),
-		get_value(TriangleNL, XUP, Y, SLU2),
-		R3 #=< SLU1 + SLU2,			
-		%making white spaces to form bigger squares
-		%down direction
-		get_value(Whites, X, YR, SLDW),
-		R3 + SLD1 #=< SLDW + 1,
-		%updirection
-		get_value(Whites, XUP, Y, SLUW),
-		R3 + SLU1 #=< SLUW + 1,
-		
-	%SR triangles (R4)
-		%down direction
-		get_value(TriangleSR, XD, YL, SRD1),
-		get_value(TriangleSL, X, YL, SRD2),
-		R4 #=< SRD1 + SRD2,
-		%up direction
-		get_value(TriangleSR, XUP, YR, SRU1),
-		get_value(TriangleNR, XUP, Y, SRU2),
-		R4 #=< SRU1 + SRU2,
-		%down direction
-		get_value(Whites, X, YL, SRDW),
-		R3 + SRD1 #=< SRDW + 1,
-		%updirection
-		get_value(Whites, XUP, Y, SRUW),
-		R3 + SRU1 #=< SRUW + 1,
+            %prevent nested rectangles
+            get_value(TriangleSR, X , Y , Nested1),
+            get_value(TriangleSL, X , YR, Nested2),
+            get_value(TriangleNR, XD, Y , Nested3),
+            get_value(TriangleNL, XD, YR, Nested4),
+            sum([Nested1, Nested2, Nested3, Nested4], #<, 4),
 
-	make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
+            %stop repeated triangles
+            DiffX is XMax - X,
+            DiffY is YMax - Y,
+            stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, DiffX, DiffY),
 
-stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, 1, _) :- !.
-stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, _, 1) :- !.
-stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, _, _) :-
-	DiffX is XMax - X,
-	DiffX > 1,
-	DiffY is YMax - Y,
-	DiffY > 1, !,
-	get_value(TriangleNL, X, Y, Value1),
-	XFinal is X + DiffX,
-	YFinal is Y + DiffY,
-	get_value(TriangleNL, XFinal, YFinal, Value2),
+            %making sure white spaces forms squares
+            get_value(Whites	, X , Y , W1),
+            get_value(Whites	, XD, Y , W2),
+            get_value(Whites    , X , YR, W3),
+            get_value(Whites    , XD, YR, W4),
+            %SR position
+            get_value(TriangleSR, XD, YR, SR),
+            W1 + W2 + W3 #=< W4 + SR + 2,
+            %SL Position
+            get_value(TriangleSL, XD, Y , SL),
+            W1 + W3 + W4 #=< W2 + SL + 2,
+            %NR Position
+            get_value(TriangleNR, X , YR, NR),
+            W1 + W2 + W4 #=< W3 + NR + 2,
+            %NL Position
+            get_value(TriangleNL, X , Y , NL),
+            W2 + W3 + W4 #=< W1 + NL + 2,
 
-	sum_between_triangles(TriangleSR, X, Y, DiffX, DiffY, Sum),
 
-	Value1 + Value2 #=< Sum + 1,
-	NewXMax is XMax - 1,
-	NewYMax is YMax - 1,
-	stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, NewXMax, NewYMax, DiffX, DiffY).
-stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, _, _) :- true.
+            %NL triangles (R1)
+            %down direction
+            get_value(TriangleNL, XD, YL, NLD1),
+            get_value(TriangleSL, XD, Y, NLD2),
+            R1 #=< NLD1 + NLD2,
+            %up direction
+            get_value(TriangleNL, XUP, YR, NLU1),
+            get_value(TriangleNR, X, YR, NLU2),
+            R1 #=< NLU1 + NLU2,
+            %down direction
+            get_value(Whites, XD, Y, NLDW),
+            R1 + NLD1 #=< NLDW + 1,
+            %updirection
+            get_value(Whites, X, YR, NLUW),
+            R1 + NLU1 #=< NLUW + 1,
 
-sum_between_triangles(_			, _, _,     _,     1, 0) :- !.
-sum_between_triangles(_			, _, _,     1,     _, 0) :- !.
+            %NR triangles (R2)
+            %down direction
+            get_value(TriangleNR, XD, YR, NRD1),
+            get_value(TriangleSR, XD, Y, NRD2),
+            R2 #=< NRD1 + NRD2,
+            %up direction
+            get_value(TriangleNR, XUP, YL, NRU1),
+            get_value(TriangleNL, X, YL, NRU2),
+            R2 #=< NRU1 + NRU2,
+            %down direction
+            get_value(Whites, XD, Y, NRDW),
+            R2 + NRD1 #=< NRDW + 1,
+            %updirection
+            get_value(Whites, X, YL, NRUW),
+            R2 + NRU1 #=< NRUW + 1,
+
+            %SL triangles (R3)
+            %down direction
+            get_value(TriangleSL, XD, YR, SLD1),
+            get_value(TriangleSR, X, YR, SLD2),
+            R3 #=< SLD1 + SLD2,
+            %up direction
+            get_value(TriangleSL, XUP, YL, SLU1),
+            get_value(TriangleNL, XUP, Y, SLU2),
+            R3 #=< SLU1 + SLU2,
+            %making white spaces to form bigger squares
+            %down direction
+            get_value(Whites, X, YR, SLDW),
+            R3 + SLD1 #=< SLDW + 1,
+            %updirection
+            get_value(Whites, XUP, Y, SLUW),
+            R3 + SLU1 #=< SLUW + 1,
+
+            %SR triangles (R4)
+            %down direction
+            get_value(TriangleSR, XD, YL, SRD1),
+            get_value(TriangleSL, X, YL, SRD2),
+            R4 #=< SRD1 + SRD2,
+            %up direction
+            get_value(TriangleSR, XUP, YR, SRU1),
+            get_value(TriangleNR, XUP, Y, SRU2),
+            R4 #=< SRU1 + SRU2,
+            %down direction
+            get_value(Whites, X, YL, SRDW),
+            R3 + SRD1 #=< SRDW + 1,
+            %updirection
+            get_value(Whites, XUP, Y, SRUW),
+            R3 + SRU1 #=< SRUW + 1,
+
+            make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
+
+          stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, 1, _) :- !.
+        stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, _, 1) :- !.
+      stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, _, _) :-
+        DiffX is XMax - X,
+        DiffX > 1,
+        DiffY is YMax - Y,
+        DiffY > 1, !,
+        get_value(TriangleNL, X, Y, Value1),
+        XFinal is X + DiffX,
+        YFinal is Y + DiffY,
+        get_value(TriangleNL, XFinal, YFinal, Value2),
+
+        sum_between_triangles(TriangleSR, X, Y, DiffX, DiffY, Sum),
+
+        Value1 + Value2 #=< Sum + 1,
+        NewXMax is XMax - 1,
+        NewYMax is YMax - 1,
+        stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, NewXMax, NewYMax, DiffX, DiffY).
+      stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, _, _) :- true.
+
+    sum_between_triangles(_			, _, _,     _,     1, 0) :- !.
+  sum_between_triangles(_			, _, _,     1,     _, 0) :- !.
 sum_between_triangles(TriangleSR, X, Y, DiffX, DiffY, Sum) :-
-	NewDiffX is DiffX - 1,
-	NewDiffX > 0,
-	NewDiffY is DiffY - 1,
-	NewDiffY > 0, !,
-	XNew is X + NewDiffX,
-	YNew is Y + NewDiffY,
-	get_value(TriangleSR, XNew, YNew, Value),
-	sum_between_triangles(TriangleSR, X, Y, NewDiffX, NewDiffY, NewSum),
-	Sum #= NewSum + Value.
+  NewDiffX is DiffX - 1,
+  NewDiffX > 0,
+  NewDiffY is DiffY - 1,
+  NewDiffY > 0, !,
+  XNew is X + NewDiffX,
+  YNew is Y + NewDiffY,
+  get_value(TriangleSR, XNew, YNew, Value),
+  sum_between_triangles(TriangleSR, X, Y, NewDiffX, NewDiffY, NewSum),
+  Sum #= NewSum + Value.
 sum_between_triangles( _, _, _, _, _, _) :- true.

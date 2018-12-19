@@ -19,7 +19,7 @@ print_char(1) :- write(1).
 print_char(2) :- write(2).
 print_char(3) :- write(3).
 print_char(4) :- write(4).
-print_char(b) :- put_code(9632).
+print_char(b) :- put_code(9608).
 print_char(ult) :- put_code(9700).
 print_char(urt) :- put_code(9701).
 print_char(llt) :- put_code(9699).
