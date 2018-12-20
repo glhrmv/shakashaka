@@ -9,20 +9,30 @@
 
 % shakashaka(+File)
 shakashaka(File) :-
+  % Start timer
+  statistics(walltime, [_TimeSinceStart | [_TimeSinceLastCall]]),
+  % Get an input puzzle from the given file
   get_puzzle_from_file(File, Puzzle),
   write('Validating puzzle...'), nl,
   (
+    % Validate the puzzle
     validate_puzzle(Puzzle) ->
     write('The puzzle is valid. Solving...'), nl
   ;
     write('The puzzle is not valid. Exiting...'), nl,
     false
   ),
+  % Solve the puzzle
   solve_puzzle(Puzzle, Solution),
+  % Print out the original input puzzle
   write('Puzzle given:'), nl,
   print_puzzle(Puzzle),
+  % Print out the solution to the puzzle
   write('Solution:'), nl,
-  print_puzzle(Solution).
+  print_puzzle(Solution),
+  % Get & print elapsed time
+  statistics(walltime, [_NewTimeSinceStart | [ExecutionTime]]),
+  write('Solving this puzzle took '), write(ExecutionTime), write(' ms.'), nl.
 
 % get_puzzle_from_file(+File, -Puzzle)
 get_puzzle_from_file(File, Puzzle) :-
