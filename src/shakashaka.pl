@@ -294,9 +294,9 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             sum([Nested1, Nested2, Nested3, Nested4], #<, 4),
 
             %stop repeated triangles
-            DiffX is XMax - X,
-            DiffY is YMax - Y,
-            stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, DiffX, DiffY),
+            %DiffX is XMax - X,
+            %DiffY is YMax - Y,
+            %stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, DiffX, DiffY),
 
             %making sure white spaces forms squares
             get_value(Whites	, X , Y , W1),
