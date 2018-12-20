@@ -315,6 +315,22 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             %NL Position
             get_value(TriangleNL, X , Y , NL),
             W2 + W3 + W4 #=< W1 + NL + 2,
+			
+            get_value(Whites	, XUP, Y , WW2),
+            get_value(Whites    , X  , YL, WW3),
+            get_value(Whites    , XUP, YL, WW4),
+			
+			get_value(TriangleNL, XUP, YL, SR1),
+            W1 + WW2 + WW3 #=< WW4 + SR1 + 2,
+            %SL Position
+            get_value(TriangleNR, XUP, Y , SL1),
+            W1 + WW3 + WW4 #=< WW2 + SL1 + 2,
+            %NR Position
+            get_value(TriangleSL, X , YL, NR1),
+            W1 + WW2 + WW4 #=< WW3 + NR1 + 2,
+            %NL Position
+            get_value(TriangleSR, X , Y , NL1),
+            WW2 + WW3 + WW4 #=< W1 + NL1 + 2,
 
 
             %NL triangles (R1)
