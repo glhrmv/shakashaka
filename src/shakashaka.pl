@@ -365,10 +365,10 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             R4 #=< SRU1 + SRU2,
             %down direction
             get_value(Whites, X, YL, SRDW),
-            R3 + SRD1 #=< SRDW + 1,
+            R4 + SRD1 #=< SRDW + 1,
             %updirection
             get_value(Whites, XUP, Y, SRUW),
-            R3 + SRU1 #=< SRUW + 1,
+            R4 + SRU1 #=< SRUW + 1,
 
             make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
 
