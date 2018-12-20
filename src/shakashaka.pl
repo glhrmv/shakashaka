@@ -135,8 +135,10 @@ solve_puzzle(Puzzle, Solution) :-
   split_list(TempList5, Y, Whites),
   domain(TempList5, 0, 1),
 
-  /* Every empty position must be 1
-  Black position must be 0 */
+  /*
+  * Every empty position must be 1
+  * Black position must be 0
+  * */
   make_sum_one(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList),
 
   /* If there is numbers, make the adjacent sum equals that */
