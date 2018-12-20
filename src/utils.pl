@@ -13,7 +13,7 @@ flatten_list([Xs0 | Xss],Ys) :-
   flatten_list(Xss, Ys0).
 
 % print_char(+Char)
-print_char(e) :- write(' ').
+print_char(e) :- put_code(183).
 print_char(0) :- write(0).
 print_char(1) :- write(1).
 print_char(2) :- write(2).
