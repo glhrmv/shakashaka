@@ -9,13 +9,11 @@
 
 % shakashaka(+File)
 shakashaka(File) :-
-  % Start timer
-  statistics(walltime, [_TimeSinceStart | [_TimeSinceLastCall]]),
   % Get an input puzzle from the given file
   get_puzzle_from_file(File, Puzzle),
   write('Validating puzzle...'), nl,
+  % Validate the puzzle
   (
-    % Validate the puzzle
     validate_puzzle(Puzzle) ->
     write('The puzzle is valid. Solving...'), nl
   ;
@@ -23,16 +21,21 @@ shakashaka(File) :-
     false
   ),
   % Solve the puzzle
-  solve_puzzle(Puzzle, Solution),
-  % Print out the original input puzzle
-  write('Puzzle given:'), nl,
-  print_puzzle(Puzzle),
-  % Print out the solution to the puzzle
-  write('Solution:'), nl,
-  print_puzzle(Solution),
-  % Get & print elapsed time
-  statistics(walltime, [_NewTimeSinceStart | [ExecutionTime]]),
-  write('Solving this puzzle took '), write(ExecutionTime), write(' ms.'), nl.
+  (
+    solve_puzzle(Puzzle, Solution, TimeElapsed) ->
+    % Print out the original input puzzle
+    write('Puzzle given:'), nl,
+    print_puzzle(Puzzle),
+    % Print out the solution to the puzzle
+    write('Solution:'), nl,
+    print_puzzle(Solution),
+    % Get & print elapsed time
+    write('Solving this puzzle took '), write(TimeElapsed), write(' ms.'), nl,
+    true
+  ;
+    write('The puzzle is not solvable. Exiting...'), nl,
+    false
+  ).
 
 % get_puzzle_from_file(+File, -Puzzle)
 get_puzzle_from_file(File, Puzzle) :-
@@ -45,7 +48,7 @@ get_puzzle_from_file(File, Puzzle) :-
 read_file(Stream, List):-
   % Read stream until EOF,
   % adding each line
-  % as a list onto List
+  % as an element onto List
   read_term(Stream, Line, []),
   (   Line == end_of_file
   ->  List = []
@@ -106,16 +109,12 @@ print_line([Char | Chars]) :-
   put_code(9474),
   print_line(Chars).
 
-/*
-[
-Y Y
-X[1,2]
-X[2,3]
-]
-*/
+% solve_puzzle(+Puzzle, -Solution, -TimeElapsed)
+solve_puzzle(Puzzle, Solution, TimeElapsed) :-
+  % Start timer
+  statistics(walltime, [_TimeSinceStart | [_TimeSinceLastCall]]),
 
-% solve_puzzle(+Puzzle, -Solution)
-solve_puzzle(Puzzle, Solution) :-
+  % Define domains
   length(Puzzle, X),
   Puzzle = [P| _],
   length(P, Y), % TODO: fazer verificacao do tamanho de todas as listas
@@ -164,6 +163,7 @@ solve_puzzle(Puzzle, Solution) :-
   convert_to_one_board(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList, SolutionNotFlat),
   split_list(SolutionNotFlat, Y, Solution),
 
+  statistics(walltime, [_NewTimeSinceStart | [TimeElapsed]]),
   true.
 
 make_sum_one([], [], [], [], [], []).
