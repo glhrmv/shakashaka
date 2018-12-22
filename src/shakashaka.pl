@@ -65,9 +65,6 @@ validate_puzzle(Puzzle) :-
 
 % validate_dimensions(+Puzzle)
 validate_dimensions(Puzzle) :-
-  % Puzzle needs at least 2 rows
-  length(Puzzle, RowCount),
-  RowCount > 1,
   % Check if all of the sublists (puzzle rows)
   % have the same length (number of columns)
   equal_lengths(Puzzle).
@@ -315,12 +312,12 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             %NL Position
             get_value(TriangleNL, X , Y , NL),
             W2 + W3 + W4 #=< W1 + NL + 2,
-			
+
             get_value(Whites	, XUP, Y , WW2),
             get_value(Whites    , X  , YL, WW3),
             get_value(Whites    , XUP, YL, WW4),
-			
-			get_value(TriangleNL, XUP, YL, SR1),
+
+            get_value(TriangleNL, XUP, YL, SR1),
             W1 + WW2 + WW3 #=< WW4 + SR1 + 2,
             %SL Position
             get_value(TriangleNR, XUP, Y , SL1),
