@@ -207,11 +207,12 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
   get_value(TriangleSL, XUP, Y, R3UP),
   get_value(TriangleSR, XUP, Y, R4UP),
 
-  %this up position only can have blank or llt or lrt
+  /* Constraint B */
+  /* Borders of the puzzle must form 90 degrees */
+  /* Also Black Blocks also must form 90 degrees */
   (   XUP > 0	->
     sum([R1UP, R2UP], #=, 0)
   ; true %out of bounderies
-    % if needed we can put that when they are at the borders XUP = 1 that something is not permitted
     ),
 
     %left
@@ -254,7 +255,9 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
     ;
       true
     ),
-
+	
+	/* END OF CONSTRAINT B */
+	
     make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
 
   % quando as casas estao vazias, comecando a trabalhar na restricao que o triangulo pode ter um seguinte igual em i+1 j+1 ou fechado ao lado
