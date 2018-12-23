@@ -300,8 +300,12 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             %DiffX is XMax - X,
             %DiffY is YMax - Y,
             %stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, DiffX, DiffY),
-
+		/* CONSTRAINT D */
+		/* There is always white spaces that form a rectangle, 
+		   If there is 3 white spaces, they must end with a certain triangle depending of the direction 
+		* */
             %making sure white spaces forms squares
+			%w stands for white
             get_value(Whites	, X , Y , W1),
             get_value(Whites	, XD, Y , W2),
             get_value(Whites    , X , YR, W3),
@@ -334,8 +338,16 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             %NL Position
             get_value(TriangleSR, X , Y , NL1),
             WW2 + WW3 + WW4 #=< W1 + NL1 + 2,
-
-
+		
+		/* END OF CONSTRAINT D */
+		
+		/* CONSTRAINT C */
+		/* If there is a certain triangle, in the same diagonal 
+			must have the same triangle (180degrees forming a line)
+			or there must have a triangle that form 90 degrees */
+		/* Otherwise, if there is a triangle that forms a line, 
+			in the place that was possible to have a 90 
+			degrees triangle must have a white space */
             %NL triangles (R1)
             %down direction
             get_value(TriangleNL, XD, YL, NLD1),
@@ -400,9 +412,12 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             %updirection
             get_value(Whites, XUP, Y, SRUW),
             R4 + SRU1 #=< SRUW + 1,
+			
+		/* END OF CONSTRAINT C */
 
             make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
-
+	/* Constraint E */
+	/* Don't allow nested triangles */
           stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, 1, _) :- !.
         stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, _, 1) :- !.
       stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, _, _) :-
@@ -436,3 +451,5 @@ sum_between_triangles(TriangleSR, X, Y, DiffX, DiffY, Sum) :-
   sum_between_triangles(TriangleSR, X, Y, NewDiffX, NewDiffY, NewSum),
   Sum #= NewSum + Value.
 sum_between_triangles( _, _, _, _, _, _) :- true.
+
+/* END OF CONSTRAINT E */
