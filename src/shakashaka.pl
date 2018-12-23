@@ -265,18 +265,21 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
     YNew is Y - 1,
     get_value(P, X, Y, R),
     R == 'e', %confirmacao que e so em espacos brancos
-
-    %if they are in borders they can't make 45º degree
+	
+	/* Last Part of Constraint B but now for the empty spaces */
+    %if they are in borders they can't make 45 degrees
     get_value(TriangleNL, X, Y, R1),
     get_value(TriangleNR, X, Y, R2),
     get_value(TriangleSL, X, Y, R3),
     get_value(TriangleSR, X, Y, R4),
-
+	
     (X == 1 ->    sum([R3, R4], #=, 0);true),
-      (Y == 1 ->    sum([R2, R4], #=, 0);true),
-        (Y == YMax -> sum([R1, R3], #=, 0);true),
-          (X == XMax -> sum([R1, R2], #=, 0);true),
-
+    (Y == 1 ->    sum([R2, R4], #=, 0);true),
+    (Y == YMax -> sum([R1, R3], #=, 0);true),
+    (X == XMax -> sum([R1, R2], #=, 0);true),
+	
+	
+	/* End of coinstraint B */
             %right
             YR is Y + 1,
             %down
