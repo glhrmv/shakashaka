@@ -1,7 +1,6 @@
 /* Shakashaka */
 
 :- use_module(library(clpfd)).
-:- use_module(library(lists)).
 :- use_module(library(system)).
 
 :- ensure_loaded('list_create.pl').
@@ -108,84 +107,84 @@ print_line([Char | Chars]) :-
 
 % solve_puzzle(+Puzzle, -Solution, -TimeElapsed)
 solve_puzzle(Puzzle, Solution, TimeElapsed) :-
-  % Start timer
-  statistics(walltime, [_TimeSinceStart | [_TimeSinceLastCall]]),
+	% Start timer
+	statistics(walltime, [_TimeSinceStart | [_TimeSinceLastCall]]),
 
-  % Define domains
-  length(Puzzle, X),
-  Puzzle = [P| _],
-  length(P, Y), % TODO: fazer verificacao do tamanho de todas as listas
-  TotalSize is X * Y,
-  flatten_list(Puzzle, PuzzleList),
+	% Define domains
+	length(Puzzle, X),
+	Puzzle = [P| _],
+	length(P, Y), % TODO: fazer verificacao do tamanho de todas as listas
+	TotalSize is X * Y,
+	flatten_list(Puzzle, PuzzleList),
 
-  /*
-  * Starting variables
-  * */
-  length(TempList1, TotalSize),
-  split_list(TempList1, Y, TriangleNL),
-  domain(TempList1, 0, 1),
+	/*
+	* Starting variables
+	* */
+	length(TempList1, TotalSize),
+	split_list(TempList1, Y, TriangleNL),
+	domain(TempList1, 0, 1),
 
-  length(TempList2, TotalSize),
-  split_list(TempList2, Y, TriangleNR),
-  domain(TempList2, 0, 1),
+	length(TempList2, TotalSize),
+	split_list(TempList2, Y, TriangleNR),
+	domain(TempList2, 0, 1),
 
-  length(TempList3, TotalSize),
-  split_list(TempList3, Y, TriangleSL),
-  domain(TempList3, 0, 1),
+	length(TempList3, TotalSize),
+	split_list(TempList3, Y, TriangleSL),
+	domain(TempList3, 0, 1),
 
-  length(TempList4, TotalSize),
-  split_list(TempList4, Y, TriangleSR),
-  domain(TempList4, 0, 1),
+	length(TempList4, TotalSize),
+	split_list(TempList4, Y, TriangleSR),
+	domain(TempList4, 0, 1),
 
-  length(TempList5, TotalSize),
-  split_list(TempList5, Y, Whites),
-  domain(TempList5, 0, 1),
+	length(TempList5, TotalSize),
+	split_list(TempList5, Y, Whites),
+	domain(TempList5, 0, 1),
 
-  /*
-  * Every empty position must be 1
-  * Black position must be 0
-  * */
-  make_sum_one(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList),
+	/*
+	* Every empty position must be 1
+	* Black position must be 0
+	* */
+	make_sum_one(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList),
 
-  /* If there is numbers, make the adjacent sum equals that */
-  make_sum_equals_puzzle(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, Puzzle, X, Y, X, Y),
+	/* If there is numbers, make the adjacent sum equals that */
+	make_sum_equals_puzzle(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, Puzzle, X, Y, X, Y),
 
-  /* generating variables */
-  labeling([], TempList1),
-  labeling([], TempList2),
-  labeling([], TempList3),
-  labeling([], TempList4),
-  labeling([], TempList5),
+	/* generating variables */
+	labeling([], TempList1),
+	labeling([], TempList2),
+	labeling([], TempList3),
+	labeling([], TempList4),
+	labeling([], TempList5),
 
-  statistics(walltime, [_NewTimeSinceStart | [TimeElapsed]]),
-  
-  convert_to_one_board(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList, SolutionNotFlat),
-  split_list(SolutionNotFlat, Y, Solution),
+	statistics(walltime, [_NewTimeSinceStart | [TimeElapsed]]),
 
-  
-  true.
+	convert_to_one_board(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList, SolutionNotFlat),
+	split_list(SolutionNotFlat, Y, Solution),
+	print_puzzle(Solution),	
+
+	true.
 
 make_sum_one([], [], [], [], [], []).
 make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s], [P | Ps]) :-
-  P = 'e',
-  Sum is 1,
-  Sum #= L1 + L2 + L3 + L4 + L5, !,
-  make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
+	P = 'e',
+	Sum is 1,
+	Sum #= L1 + L2 + L3 + L4 + L5, !,
+	make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
 
 make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s], [P | Ps]) :-
-  P = 'b',
-  Sum is 0,
-  Sum #= L1 + L2 + L3 + L4 + L5, !,
-  make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
+	P = 'b',
+	Sum is 0,
+	Sum #= L1 + L2 + L3 + L4 + L5, !,
+	make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
 
 make_sum_one([_ | L1s], [_ | L2s], [_ | L3s], [_ | L4s], [_ | L5s], [_ | Ps]) :-
-  make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
+	make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
 
 make_sum_equals_puzzle( _,  _,  _,  _,  _, _, 0, _,    _,    _) :- !.
-make_sum_equals_puzzle(L1, L2, L3, L4, L5, P, X, Y, XMax, YMax) :-
-  XNew is X - 1,
-  make_sum_equals_puzzle_r(L1, L2, L3, L4, L5, P,    X, Y, XMax, YMax),
-  make_sum_equals_puzzle(  L1, L2, L3, L4, L5, P, XNew, Y, XMax, YMax).
+make_sum_equals_puzzle(L1, L2, L3, L4, L5, P, X, Y, XMax, YMax) :- !,
+	XNew is X - 1,
+	make_sum_equals_puzzle_r(L1, L2, L3, L4, L5, P,    X, Y, XMax, YMax),
+	make_sum_equals_puzzle(  L1, L2, L3, L4, L5, P, XNew, Y, XMax, YMax).
 
 make_sum_equals_puzzle_r(         _,          _,          _,          _,      _, _, _, 0,    _,    _) :- !.
 make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax) :-
@@ -266,7 +265,7 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
   make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax) :-
     YNew is Y - 1,
     get_value(P, X, Y, R),
-    R == 'e', %confirmacao que e so em espacos brancos
+    R == 'e', !,%confirmacao que e so em espacos brancos
 	
 	/* Last Part of Constraint B but now for the empty spaces */
     %if they are in borders they can't make 45 degrees
@@ -353,11 +352,11 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             %NL triangles (R1)
             %down direction
             get_value(TriangleNL, XD, YL, NLD1),
-            get_value(TriangleSL, XD, Y, NLD2),
+            get_value(TriangleSL, XD, Y , NLD2),
             R1 #=< NLD1 + NLD2,
             %up direction
             get_value(TriangleNL, XUP, YR, NLU1),
-            get_value(TriangleNR, X, YR, NLU2),
+            get_value(TriangleNR, X  , YR, NLU2),
             R1 #=< NLU1 + NLU2,
             %down direction
             get_value(Whites, XD, Y, NLDW),
@@ -402,7 +401,7 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
             %SR triangles (R4)
             %down direction
             get_value(TriangleSR, XD, YL, SRD1),
-            get_value(TriangleSL, X, YL, SRD2),
+            get_value(TriangleSL, X , YL, SRD2),
             R4 #=< SRD1 + SRD2,
             %up direction
             get_value(TriangleSR, XUP, YR, SRU1),
@@ -417,41 +416,41 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
 			
 		/* END OF CONSTRAINT C */
 
-            make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
+		make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, YNew, XMax, YMax).
 	/* Constraint E */
 	/* Don't allow nested triangles */
-          stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, 1, _) :- !.
-        stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, _, 1) :- !.
-      stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, _, _) :-
-        DiffX is XMax - X,
-        DiffX > 1,
-        DiffY is YMax - Y,
-        DiffY > 1, !,
-        get_value(TriangleNL, X, Y, Value1),
-        XFinal is X + DiffX,
-        YFinal is Y + DiffY,
-        get_value(TriangleNL, XFinal, YFinal, Value2),
+	stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, 1, _) :- !.
+	stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, _, 1) :- !.
+	stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, _, _) :-
+		DiffX is XMax - X,
+		DiffX > 1,
+		DiffY is YMax - Y,
+		DiffY > 1, !,
+		get_value(TriangleNL, X, Y, Value1),
+		XFinal is X + DiffX,
+		YFinal is Y + DiffY,
+		get_value(TriangleNL, XFinal, YFinal, Value2),
 
-        sum_between_triangles(TriangleSR, X, Y, DiffX, DiffY, Sum),
+		sum_between_triangles(TriangleSR, X, Y, DiffX, DiffY, Sum),
 
-        Value1 + Value2 #=< Sum + 1,
-        NewXMax is XMax - 1,
-        NewYMax is YMax - 1,
-        stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, NewXMax, NewYMax, DiffX, DiffY).
-      stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, _, _) :- true.
+		Value1 + Value2 #=< Sum + 1,
+		NewXMax is XMax - 1,
+		NewYMax is YMax - 1,
+		stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, NewXMax, NewYMax, DiffX, DiffY).
+	stop_repeat_triangles(_, _, _, _, _, _, _, _, _, _, _, _) :- true.
 
-    sum_between_triangles(_			, _, _,     _,     1, 0) :- !.
-  sum_between_triangles(_			, _, _,     1,     _, 0) :- !.
-sum_between_triangles(TriangleSR, X, Y, DiffX, DiffY, Sum) :-
-  NewDiffX is DiffX - 1,
-  NewDiffX > 0,
-  NewDiffY is DiffY - 1,
-  NewDiffY > 0, !,
-  XNew is X + NewDiffX,
-  YNew is Y + NewDiffY,
-  get_value(TriangleSR, XNew, YNew, Value),
-  sum_between_triangles(TriangleSR, X, Y, NewDiffX, NewDiffY, NewSum),
-  Sum #= NewSum + Value.
-sum_between_triangles( _, _, _, _, _, _) :- true.
+	sum_between_triangles(_			, _, _,     _,     1, 0) :- !.
+	sum_between_triangles(_			, _, _,     1,     _, 0) :- !.
+	sum_between_triangles(TriangleSR, X, Y, DiffX, DiffY, Sum) :-
+		NewDiffX is DiffX - 1,
+		NewDiffX > 0,
+		NewDiffY is DiffY - 1,
+		NewDiffY > 0, !,
+		XNew is X + NewDiffX,
+		YNew is Y + NewDiffY,
+		get_value(TriangleSR, XNew, YNew, Value),
+		sum_between_triangles(TriangleSR, X, Y, NewDiffX, NewDiffY, NewSum),
+		Sum #= NewSum + Value.
+	sum_between_triangles( _, _, _, _, _, _) :- true.
 
 /* END OF CONSTRAINT E */
