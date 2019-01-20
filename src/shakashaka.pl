@@ -157,10 +157,12 @@ solve_puzzle(Puzzle, Solution, TimeElapsed) :-
   labeling([], TempList4),
   labeling([], TempList5),
 
+  statistics(walltime, [_NewTimeSinceStart | [TimeElapsed]]),
+  
   convert_to_one_board(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList, SolutionNotFlat),
   split_list(SolutionNotFlat, Y, Solution),
 
-  statistics(walltime, [_NewTimeSinceStart | [TimeElapsed]]),
+  
   true.
 
 make_sum_one([], [], [], [], [], []).
