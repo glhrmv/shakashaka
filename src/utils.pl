@@ -7,7 +7,7 @@ get_value(Puzzle, Row, Col, Char) :-
 get_value(_, _, _, Char) :-
   Char is 0.
 
-flatten_list([], []).
+flatten_list([], []) :- !.
 flatten_list([Xs0 | Xss],Ys) :-
   append(Xs0, Ys0, Ys),
   flatten_list(Xss, Ys0).
@@ -28,30 +28,29 @@ print_char(_) :- false.
 
 convert_to_one_board([]        , []       , []       , []       , []       , []      , []    ) :- !.
 convert_to_one_board([L1 | L1s], [_ | L2s], [_ | L3s], [_ | L4s], [_ | L5s], [_ | Ps], [S | Ss]) :-
-  L1 = 1,
+  L1 = 1, !,
   S = 'ult',
   convert_to_one_board(L1s, L2s, L3s, L4s, L5s, Ps, Ss).
 
 convert_to_one_board([_  | L1s], [L2| L2s], [_ | L3s], [_ | L4s], [_ | L5s], [_ | Ps], [S|Ss]) :-
-  L2 = 1,
+  L2 = 1, !,
   S = 'urt',
   convert_to_one_board(L1s, L2s, L3s, L4s, L5s, Ps, Ss).
 
 convert_to_one_board([_  | L1s], [_ | L2s], [L3| L3s], [_ | L4s], [_ | L5s], [_ | Ps], [S|Ss]) :-
-  L3 = 1,
+  L3 = 1, !,
   S = 'llt',
   convert_to_one_board(L1s, L2s, L3s, L4s, L5s, Ps, Ss).
 
 convert_to_one_board([_  | L1s], [_ | L2s], [_ | L3s], [L4| L4s], [_ | L5s], [_ | Ps], [S|Ss]) :-
-  L4 = 1,
+  L4 = 1, !,
   S = 'lrt',
   convert_to_one_board(L1s, L2s, L3s, L4s, L5s, Ps, Ss).
 
 convert_to_one_board([_  | L1s], [_ | L2s], [_ | L3s], [_ | L4s], [L5| L5s], [_ | Ps], [S|Ss]) :-
-  L5 = 1,
+  L5 = 1, !,
   S = 'e',
   convert_to_one_board(L1s, L2s, L3s, L4s, L5s, Ps, Ss).
 
 convert_to_one_board([_  | L1s], [_ | L2s], [_ | L3s], [_ | L4s], [_ | L5s], [P | Ps], [P|Ss]) :-
   convert_to_one_board(L1s, L2s, L3s, L4s, L5s, Ps, Ss).
-
