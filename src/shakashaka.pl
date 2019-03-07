@@ -109,8 +109,9 @@ print_line([Char | Chars]) :-
 % solve_puzzle(+Puzzle, -Solution, -TimeElapsed)
 solve_puzzle(Puzzle, Solution, TimeElapsed) :-
 	% Start timer
+	fd_statistics,
 	statistics(walltime, [_TimeSinceStart | [_TimeSinceLastCall]]),
-	
+	statistics(memory, _),
 	% Define domains
 	length(Puzzle, X),
 	Puzzle = [P| _],
@@ -155,18 +156,26 @@ solve_puzzle(Puzzle, Solution, TimeElapsed) :-
 	append(NewList2, TempList4, NewList3),
 	append(NewList3, TempList5, FINAL),
 	
-	write(FINAL),nl,
-	
 	/* generating variables */
 	labeling([], FINAL),
 
 	%solve_puzzle([[e,e],[e,e]],S,L).
-	
+	fd_statistics(resumptions, Stats1),
+	fd_statistics(entailments, Stats2),
+	fd_statistics(prunings, Stats3),
+	fd_statistics(backtracks, Stats4),
+	fd_statistics(constraints, Stats5),
+	write('Resumptions: '), write(Stats1), nl,
+	write('entailments: '),write(Stats2), nl,
+	write('prunings: '),write(Stats3), nl,
+	write('backtracks: '),write(Stats4), nl,
+	write('constraints: '),write(Stats5), nl,
 	statistics(walltime, [_NewTimeSinceStart | [TimeElapsed]]),
-
+	statistics,
 	convert_to_one_board(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList, SolutionNotFlat),
-	split_list(SolutionNotFlat, Y, Solution),
-	print_puzzle(Solution).
+	split_list(SolutionNotFlat, Y, Solution).
+
+	
 
 make_sum_one([], [], [], [], [], []) :- !.
 make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s], [P | Ps]) :-
@@ -309,6 +318,7 @@ make_sum_equals_puzzle_r(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites,
 		/* EVITAR NESTED TRIANGLES!!!!! */
 		get_value(TriangleNL, XD, YR, Nested1),
 		sum([R1, Nested1], #<, 2),
+		
 		
 		
 		%stop_repeat_triangles(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, P, X, Y, XMax, YMax, DiffX, DiffY),

@@ -1,0 +1,10 @@
+[2,e,e,e,e,3,e,e,2,b].
+[e,e,e,e,e,e,e,e,e,2].
+[e,e,4,e,e,e,e,e,e,e].
+[2,b,e,e,e,4,e,e,e,e].
+[e,e,e,e,b,e,e,e,e,2].
+[e,e,e,e,e,e,e,b,b,b].
+[e,b,e,e,e,b,e,e,e,e].
+[e,2,e,e,4,e,e,b,e,e].
+[e,e,b,e,e,e,e,e,e,e].
+[e,e,2,e,e,3,e,e,b,1].
