@@ -146,7 +146,8 @@ solve_puzzle(Puzzle, Solution, TimeElapsed) :-
 	* Every empty position must be 1
 	* Black position must be 0
 	* */
-	make_sum_one(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList),
+	make_sum_one(TempList1, TempList2, TempList3, TempList4, TempList5, PuzzleList, Count),
+	write('ESPACOS BRANCOS:  '),write(Count),nl,
 
 	/* If there is numbers, make the adjacent sum equals that */
 	make_sum_equals_puzzle(TriangleNL, TriangleNR, TriangleSL, TriangleSR, Whites, Puzzle, X, Y, X, Y),
@@ -158,6 +159,10 @@ solve_puzzle(Puzzle, Solution, TimeElapsed) :-
 	
 	/* generating variables */
 	labeling([], FINAL),
+	%labeling([leftmost], FINAL),
+	%labeling([ff], FINAL),
+	%labeling([down], FINAL),
+	%labeling([ffc], FINAL),
 
 	%solve_puzzle([[e,e],[e,e]],S,L).
 	fd_statistics(resumptions, Stats1),
@@ -177,21 +182,22 @@ solve_puzzle(Puzzle, Solution, TimeElapsed) :-
 
 	
 
-make_sum_one([], [], [], [], [], []) :- !.
-make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s], [P | Ps]) :-
+make_sum_one([], [], [], [], [], [], 0) :- !.
+make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s], [P | Ps], Count) :-
 	P = 'e', !,
 	Sum is 1,
 	Sum #= L1 + L2 + L3 + L4 + L5,
-	make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
+	make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps, CountN),
+	Count is CountN + 1.
 
-make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s], [P | Ps]) :-
+make_sum_one([L1 | L1s], [L2 | L2s], [L3 | L3s], [L4 | L4s], [L5 | L5s], [P | Ps], Count) :-
 	P = 'b', !,
 	Sum is 0,
 	Sum #= L1 + L2 + L3 + L4 + L5,
-	make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
+	make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps, Count).
 
-make_sum_one([_ | L1s], [_ | L2s], [_ | L3s], [_ | L4s], [_ | L5s], [_ | Ps]) :-
-	make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps).
+make_sum_one([_ | L1s], [_ | L2s], [_ | L3s], [_ | L4s], [_ | L5s], [_ | Ps], Count) :-
+	make_sum_one(L1s, L2s, L3s, L4s, L5s, Ps, Count).
 
 make_sum_equals_puzzle( _,  _,  _,  _,  _, _, 0, _,    _,    _) :- !.
 make_sum_equals_puzzle(L1, L2, L3, L4, L5, P, X, Y, XMax, YMax) :- 
