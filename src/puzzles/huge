@@ -1,0 +1,50 @@
+[e,b,e,b,e,e,b,e,e,e,b,e,e,b,e,e,b,e,e,b,e,e,e,e,b,e,e,2, e, e, e, e, e, e, b, e, e, b, e, e, e, e, e, b, b, b, b, b, b, b].
+[e,e,e,b,e,e,1,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e, e, e, e, e, e, b, e, e, e, e, e, e, b, e, e, e, e, b, e, e, e, b].
+[e,e,e,e,e,e,b,e,e,e,e,e,e,e,e,e,e,e,e,b,e,e,e,4,e,e,4,e, e, e, e, e, b, e, e, e, e, 1, e, b, e, e, b, e, e, 0, e, e, e, b].
+[e,e,e,e,1,b,e,e,e,e,e,2,e,e,e,e,e,e,e,e,e,e,e,e,e,2,e,e, b, e, e, e, e, e, e, e, e, b, b, e, e, e, 2, e, e, b, e, e, e, b].
+[3,e,e,e,e,e,e,e,e,4,e,e,4,e,e,e,e,e,e,3,e,e,e,e,e,e,e,e, e, e, b, e, e, b, e, e, 0, e, e, e, e, e, e, 1, b, e, e, b, 1, e].
+[e,e,4,e,e,e,e,e,e,e,e,e,e,b,e,e,e,e,4,e,e,e,e,e,e,e,e,e, b, b, e, e, 3, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e].
+[e,e,e,e,e,e,b,b,e,e,e,e,e,e,4,e,e,e,e,e,e,b,e,e,b,e,e,e, e, e, e, e, e, b, e, e, b, e, e, e, e, e, e, e, e, e, e, e, e, e].
+[b,e,e,e,e,e,e,e,b,e,e,e,e,e,e,e,b,e,e,b,e,e,2,e,e,4,e,e, e, e, e, e, e, e, e, e, e, b, e, e, e, 2, e, e, b, e, e, e, e, e].
+[e,e,e,4,e,e,e,e,1,1,e,e,e,e,e,e,e,e,1,e,e,e,e,e,e,e,e,e, e, e, e, e, e, e, 2, e, e, e, e, e, e, e, 4, e, e, e, b, e, e, 3].
+[e,e,e,e,e,b,e,e,e,e,1,e,e,1,e,e,e,e,e,e,e,e,e,e,b,e,e,e, e, e, e, e, e, e, e, e, e, 0, e, e, e, e, e, e, e, e, e, 2, e, e].
+[1,e,e,e,e,1,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,b,b,e, e, e, e, e, 2, e, e, e, e, b, e, e, e, b, e, e, e, e, e, e, e, e].
+[e,e,b,e,e,e,e,e,b,e,e,e,e,b,e,b,e,e,e,e,e,e,e,e,1,e,e,1, e, e, e, e, 1, e, e, e, e, 2, e, e, 3, e, e, e, e, e, e, e, e, 1].
+[e,e,e,e,b,e,e,e,e,e,e,e,b,e,e,e,e,e,e,e,4,e,e,e,b,e,e,e, e, 4, e, e, e, e, b, 2, e, e, b, e, e, e, e, e, e, e, e, e, e, e].
+[b,e,e,b,e,e,e,e,e,e,e,e,e,e,e,e,b,e,e,4,e,e,b,e,e,e,b,e,e,e, e, e, e, e, e, e, e, e, 1, e, e, b, e, e, e, e, e, e, e, b].
+[e,e,b,e,e,4,e,e,e,e,3,e,e,4,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e, e, e, b, e, e, e, e, e, e, 1, e, e, e, e, e, 2, e, e, e, e].
+[e,e,e,e,e,e,e,e,e,3,e,b,e,e,e,e,e,e,2,e,e,e,e,e,2,e,e,3,e,e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, b, e, e, e, e].
+[e,e,e,2,e,e,e,e,3,e,e,b,e,e,e,4,e,e,e,b,e,e,e,e,e,e,b,e,e,b, e, e, 2, e, e, 1, e, e, e, e, 3, e, e, e, b, e, e, b, e, e].
+[b,e,e,e,e,b,e,e,e,e,e,e,e,b,e,e,e,e,e,e,3,e,e,e,e,e,e,e,e,e, b, e, e, e, e, e, e, e, e, e, e, e, e, 2, e, e, e, e, b, e].
+[e,e,e,e,e,b,e,e,e,e,b,e,e,e,e,e,e,e,e,e,e,3,e,e,e,e,e,e, e, e, e, b, e, e, e, e, e, e, e, e, e, e, e, e, b, e, e, e, b, e].
+[e,e,e,e,2,e,e,e,e,e,e,4,e,e,b,e,e,e,e,e,e,e,e,e,e,e,e,1, e, e, e, e, e, e, e, e, e, e, 0, e, e, e, 2, e, e, e, e, b, e, e].
+[e,e,e,e,e,e,e,e,e,e,e,e,3,e,e,e,e,e,2,e,e,e,b,e,e,e,b,e, b, e, e, e, e, e, b, e, e, e, 2, e, e, e, e, e, e, e, 2, e, e, e].
+[e,e,b,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,3,e,e,e,e, e, 1, e, e, e, 4, e, e, e, e, e, 1, b, 1, e, e, e, e, e, e, e, b].
+[e,b,e,e,e,2,e,e,e,e,e,e,e,e,b,e,e,4,e,e,e,e,e,e,e,e,b,e, e, e, e, e, e, e, e, e, b, e, e, e, e, e, 3, e, e, e, e, e, e, e].
+[e,e,e,b,e,e,e,b,e,e,4,e,e,4,e,e,e,e,e,e,4,e,e,e,e,4,e,e, b, e, e, e, e, e, b, e, e, e, e, e, e, e, e, e, e, 2, 1, e, e, e].
+[e,e,e,e,e,e,e,e,b,e,e,e,3,e,e,e,e,e,e,e,e,e,e,b,e,e,e,e, e, e, e, e, e, e, e, e, e, e, e, e, e, 3, e, e, b, e, e, e, e, e].
+[e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,4,e,e,e,e,e,e,e,e,b,e, b, e, e, e, e, e, e, 4, e, e, b, e, e, e, e, 3, e, e, e, e, e, 2].
+[0,e,e,e,4,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,2,e,e,e,b, e, b, e, 1, b, e, e, e, e, e, e, e, 4, e, e, e, b, e, e, e, e, e].
+[b,e,b,e,e,b,e,e,e,e,e,e,b,e,e,4,e,e,4,e,e,e,e,e,e,e,e,b, e, b, e, b, e, 1, e, e, e, e, e, e, e, e, e, e, e, 2, e, e, b, e].
+[e,b,e,e,e,e,e,e,e,e,e,3,e,e,e,e,e,e,e,3,e,e,e,e,b,e,e,e, e, e, b, e, e, e, b, e, e, e, e, e, e, b, e, e, e, e, e, e, e, e].
+[e,b,e,e,b,e,e,b,b,e,e,e,e,e,e,e,e,e,e,e,e,4,e,e,e,e,e,e, e, b, e, e, e, b, e, e, e, b, e, e, e, e, 2, e, e, e, b, e, e, e].
+[e,e,e,e,e,b,1,e,e,e,b,e,e,e,e,e,e,b,e,e,e,e,b,e,e,e,2,e, e, e, b, e, b, e, e, e, e, e, e, 1, e, e, e, e, e, e, e, e, e, b].
+[e,e,3,e,e,e,e,b,e,e,e,e,e,2,e,e,e,e,e,e,e,e,e,e,e,e,e,e, e, e, e, e, b, e, 3, e, e, e, e, e, e, e, e, e, e, e, b, 2, e, e].
+[b,e,e,b,e,e,e,e,e,e,e,1,e,e,e,e,e,b,e,e,e,b,0,e,e,b,e,e, e, 4, e, e, e, b, e, e, b, e, e, b, e, e, b, e, e, e, e, e, e, e].
+[e,e,e,e,2,e,e,e,4,e,e,e,1,e,e,e,1,e,b,e,2,e,e,e,e,e,e,e, e, e, e, e, b, e, e, e, e, e, 1, e, e, 3, e, e, 1, b, e, e, b, e].
+[e,e,e,e,e,e,1,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,2,e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, 2].
+[3,e,e,e,e,e,e,e,e,e,e,e,e,e,b,e,e,e,e,e,e,1,2,e,e,e,e,e, e, 1, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, 3, e, e, e].
+[e,e,e,e,e,e,b,e,e,e,e,e,e,e,e,3,e,e,4,e,e,e,e,e,e,e,e,e, e, e, e, e, e, 2, e, e, e, e, e, e, e, e, b, e, e, e, e, 2, e, e].
+[e,e,b,e,e,b,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e, e, e, e, e, 4, e, e, 4, e, e, e, b, e, e, e, e, e, e, e, e, e, e].
+[e,e,e,e,b,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,b,e,e,e,e,e, e, e, e, e, e, e, e, e, e, b, b, e, 3, e, e, e, e, e, e, b, e, e].
+[e,e,e,b,e,e,e,e,2,e,e,e,3,e,e,e,e,e,e,e,e,e,e,2,e,e,b,e, e, e, 2, e, e, e, e, e, b, e, e, e, e, b, e, e, 4, e, e, e, e, b].
+[b,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,b,e,1,e,e,e,1,e,e,b,e,e, 3, e, e, 2, e, e, e, e, e, b, 2, e, e, e, e, e, e, e, e, e, e, e].
+[e,e,e,e,e,e,e,b,e,e,2,e,e,b,e,e,0,e,2,e,e,e,e,e,b,e,e,e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, 3, e, e, e, e, b, e, e].
+[e,e,e,1,e,e,e,e,e,3,e,e,b,e,e,e,e,e,e,e,e,b,e,e,e,e,e,b, e, e, 4, e, e, e, e, 4, e, e, e, e, e, e, e, b, e, e, e, e, e, e].
+[b,e,b,e,e,b,e,e,e,e,e,2,e,e,e,e,e,e,e,e,e,e,1,e,e,e,e,e, e, e, e, e, e, b, e, e, e, e, e, e, b, e, e, e, 1, e, e, e, b, e].
+[e,e,1,e,e,e,e,e,b,e,e,e,e,e,e,e,b,e,e,e,e,e,e,e,e,e,e,e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, b, e, e, e, b, e, e, e].
+[e,e,1,e,e,e,e,4,e,e,e,e,4,e,e,e,e,e,e,2,e,e,e,e,e,e,e,e, e, b, e, b, e, e, e, b, e, e, e, e, e, e, e, e, e, e, 0, e, e, e].
+[e,e,e,e,e,b,e,e,e,e,e,e,e,e,e,e,e,e,e,e,b,e,e,e,e,e,e,e,4, e, e, e, 1, e, e, e, 4, e, e, 3, e, e, e, 3, e, e, e, e, e, b].
+[b,e,e,e,e,e,e,e,e,3,e,e,e,1,b,e,1,e,b,e,e,4,e,e,4,e,e,e,e, e, e, e, e, 3, e, e, e, e, b, e, e, 4, e, e, e, e, e, e, e, e].
+[e,e,e,e,e,e,e,e,e,e,b,e,e,e,e,b,e,e,e,e,e,e,e,e,e,b,b,e,e, b, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e].
+[b,e,e,e,e,3,e,e,e,e,1,e,e,e,e,b,e,e,e,e,3,e,e,e,e,e,e,e,b, e, e, b, e, e, 1, e, e, e, e, e, 2, e, e, b, e, e, 3, e, e, b].

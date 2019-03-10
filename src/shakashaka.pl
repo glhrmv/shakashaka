@@ -108,6 +108,7 @@ print_line([Char | Chars]) :-
 
 % solve_puzzle(+Puzzle, -Solution, -TimeElapsed)
 solve_puzzle(Puzzle, Solution, TimeElapsed) :-
+	print_puzzle(Puzzle),
 	% Start timer
 	fd_statistics,
 	statistics(walltime, [_TimeSinceStart | [_TimeSinceLastCall]]),
@@ -158,7 +159,7 @@ solve_puzzle(Puzzle, Solution, TimeElapsed) :-
 	append(NewList3, TempList5, FINAL),
 	
 	/* generating variables */
-	labeling([], FINAL),
+	labeling([leftmost, down], FINAL),
 	%labeling([leftmost], FINAL),
 	%labeling([ff], FINAL),
 	%labeling([down], FINAL),
