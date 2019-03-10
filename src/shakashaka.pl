@@ -108,7 +108,6 @@ print_line([Char | Chars]) :-
 
 % solve_puzzle(+Puzzle, -Solution, -TimeElapsed)
 solve_puzzle(Puzzle, Solution, TimeElapsed) :-
-	print_puzzle(Puzzle),
 	% Start timer
 	fd_statistics,
 	statistics(walltime, [_TimeSinceStart | [_TimeSinceLastCall]]),
