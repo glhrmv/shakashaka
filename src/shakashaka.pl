@@ -158,10 +158,10 @@ solve_puzzle(Puzzle, Solution, TimeElapsed) :-
 	append(NewList3, TempList5, FINAL),
 	
 	/* generating variables */
-	labeling([leftmost, down], FINAL),
+	%labeling([leftmost, down], FINAL),
 	%labeling([leftmost], FINAL),
 	%labeling([ff], FINAL),
-	%labeling([down], FINAL),
+	labeling([down], FINAL),
 	%labeling([ffc], FINAL),
 
 	%solve_puzzle([[e,e],[e,e]],S,L).
