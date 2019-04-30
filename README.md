@@ -1,6 +1,6 @@
 # shakashaka
 
-> University project made for FEUP, MIEIC (PLOG).
+> University project for FEUP, MIEIC (PLOG).
 
 A [Prolog][prolog] implementation of the logic puzzle [Shakashaka][shakashaka].
 
